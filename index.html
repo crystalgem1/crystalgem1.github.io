@@ -1,0 +1,508 @@
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GearBound</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Montserrat:wght@400;600&family=Russo+One&display=swap"
+        rel="stylesheet">
+
+    <!-- Links -->
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+
+
+<body>
+    <!-- @HTML @BACKGROUND @GEARS-->
+    <svg style="display: none;">
+        <symbol id="gear-symbol" viewBox="0 0 100 100">
+            <g fill="currentColor">
+                <circle cx="50" cy="50" r="38" mask="url(#hole-mask)" />
+                <rect x="42" y="5" width="16" height="90" rx="2" />
+                <rect x="42" y="5" width="16" height="90" rx="2" transform="rotate(45 50 50)" />
+                <rect x="42" y="5" width="16" height="90" rx="2" transform="rotate(90 50 50)" />
+                <rect x="42" y="5" width="16" height="90" rx="2" transform="rotate(135 50 50)" />
+                <circle cx="50" cy="50" r="32" />
+            </g>
+            <mask id="hole-mask">
+                <rect x="0" y="0" width="100" height="100" fill="white" />
+                <circle cx="50" cy="50" r="14" fill="black" />
+            </mask>
+            <circle cx="50" cy="50" r="14" fill="#1b1a1a" /> <!-- Matches BG color -->
+        </symbol>
+    </svg>
+
+    <div class="gear-container">
+        <svg class="gear-bg gear-1" id="gearLeft">
+            <use href="#gear-symbol" fill="#eebb66" />
+        </svg>
+        <svg class="gear-bg gear-2" id="gearRight">
+            <use href="#gear-symbol" fill="#eebb66" />
+        </svg>
+    </div>
+
+    <!-- @NAV -->
+    <nav>
+        <a href="#" class="nav-brand">Gearbound</a>
+
+        <!-- @NAV @TOP -->
+        <div class="nav-links" id="desktopNav">
+            <a onclick="scrollToSection('status')" class="nav-item-status" style="cursor: pointer;">Status</a>
+            <a onclick="scrollToSection('teams')" class="nav-item-teams" style="cursor: pointer;">Teams</a>
+            <a onclick="scrollToSection('gallery')" class="nav-item-gallery" style="cursor: pointer;">Gallery</a>
+            <a onclick="scrollToSection('downloads')" class="nav-item-downloads" style="cursor: pointer;">Downloads</a>
+            <a onclick="scrollToSection('help')" class="nav-item-help" style="cursor: pointer;">Help</a>
+            <a onclick="scrollToSection('about')" class="nav-item-about" style="cursor: pointer;">About</a>
+        </div>
+
+        <!-- @NAV @ICON -->
+        <button class="hamburger" id="hamburger-menu" onclick="toggleMenu()">
+            <span></span> <!-- Supposed to be empty -->
+            <span></span> <!-- They make up the icon -->
+            <span></span>
+        </button>
+
+        <!-- @NAV @DROPDOWN -->
+        <div class="drop-down" id="drop-down">
+            <a onclick="scrollToSection('status')" class="mob-nav-item-status">Status</a>
+            <a onclick="scrollToSection('teams')" class="mob-nav-item-teams">Teams</a>
+            <a onclick="scrollToSection('gallery')" class="mob-nav-item-gallery">Gallery</a>
+            <a onclick="scrollToSection('downloads')" class="mob-nav-item-downloads">Downloads</a>
+            <a onclick="scrollToSection('help')" class="mob-nav-item-help">Help</a>
+            <a onclick="scrollToSection('about')" class="mob-nav-item-about">About</a>
+        </div>
+    </nav>
+
+    <!-- @HTML @HEADER -->
+    <header id="home">
+        <div class="logo-container">
+            <img src="assets/title/GearBoundTitle.webp" alt="Gearbound Title Image" height="715"
+                width="2048" fetchpriority="high" />
+        </div>
+        <h2 class="hero-title">Cabin</h2>
+        <p class="hero-subtitle">A create focused modpack</p>
+
+        <div class="server-ip-box">
+            <span>gearbound.exphost.net</span>
+            <button class="copy-btn">COPY IP</button>
+        </div>
+    </header>
+
+    <!-- @HTML @STATUS @SERVER -->
+    <div class="container" id="status">
+        <div class="section-title">Server Status</div>
+
+        <div class="status-card">
+            <div class="rivet tl"></div>
+            <div class="rivet tr"></div>
+            <div class="rivet bl"></div>
+            <div class="rivet br"></div>
+
+            <div id="server-status">
+                <div class="status-line">Connecting to Satellite...</div>
+                <p class="info-text">Pinging gearbound.exphost.net</p>
+            </div>
+
+            <div id="player-container"></div>
+        </div>
+    </div>
+
+    <!-- @HTML @TEAMS -->
+    <div class="container" id="teams">
+        <div class="section-title">GearBound Teams</div>
+        <div id="teams-grid" class="grid">
+            <!-- Teams will be injected through js -->
+        </div>
+    </div>
+
+    <!-- @HTML @GALLERY -->
+    <div class="container" id="gallery">
+        <div class="section-title">Gallery</div>
+        <div class="gallery-controls">
+            <!-- @PAUSE @ICON @BUTTON -->
+            <button class="gallery-control-btn" id="galleryPauseBtn" onclick="toggleGalleryPause()"
+                title="Pause Auto-Scroll">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                    <rect x="3" y="2" width="3" height="10" rx="1" />
+                    <rect x="8" y="2" width="3" height="10" rx="1" />
+                </svg>
+            </button>
+            <!-- @GRID @ICON @BUTTON -->
+            <button class="gallery-control-btn" id="galleryExpandBtn" onclick="toggleGalleryExpand()"
+                title="Expand View">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                    <rect x="1" y="1" width="6" height="6" rx="1" />
+                    <rect x="9" y="1" width="6" height="6" rx="1" />
+                    <rect x="1" y="9" width="6" height="6" rx="1" />
+                    <rect x="9" y="9" width="6" height="6" rx="1" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- @GALLERY @TABS -->
+        <div class="gallery-sub-tabs" id="gallery-sub-tabs">
+            <!-- tabs + images get injected here -->
+        </div>
+
+        <div class="gallery-track-container">
+            <div id="gallery-track" class="gallery-track">
+                <!-- Images will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- @BLUEMAP @MAP -->
+    <div class="container" id="bluemap-section">
+        <div class="grid" style="max-width: 800px; margin: 0 auto;">
+            <div class="card card-bluemap" style="text-align: center;">
+                <div class="rivet tl"></div>
+                <div class="rivet tr"></div>
+                <div class="rivet bl"></div>
+                <div class="rivet br"></div>
+                <h3>
+                    World Map
+                    <span class="card-emoji">🌍</span>
+                </h3>
+                <p>Explore the GearBound SMP in 3D through your browser.</p>
+
+                <div class="action-row" style="justify-content: center;">
+                    <a href="http://37.114.50.115:25717/#world:-953:0:-144:1500:0:0:0:0:perspective" target="_blank"
+                        class="btn btn-bluemap">
+                        <span class="icon-box">
+                            <svg class="icon" style="width: 18px; height: 18px;">
+                                <use href="#bluemap-icon"></use>
+                            </svg>
+                        </span>
+                        Open BlueMap
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- @DOWNLOADS -->
+    <div class="container" id="downloads">
+        <div class="section-title">Select Your Platform</div>
+        <div class="grid">
+            <!-- @PRISM @DOWNLOADS -->
+            <div class="card card-prism" id="prism">
+                <div class="badge-recommended">Recommended</div>
+                <div class="rivet tl"></div>
+                <div class="rivet bl"></div>
+                <div class="rivet br"></div>
+                <div>
+                    <h3>
+                        Prism
+                        <span class="card-emoji">&#128142;</span>
+                    </h3>
+                    <p>Light weight launcher <br> NOTE: this is the recommended installation! <br> as it offers
+                        automatic
+                        updates</p>
+                </div>
+
+                <div class="action-row">
+                    <a href="/servers/gearbound/prism/GearBound-S0.4.zip" download class="btn btn-prism">
+                        <span class="icon-box">
+                            <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z">
+                                </path>
+                            </svg>
+                        </span>
+                        Download .ZIP
+                    </a>
+                </div>
+            </div>
+
+            <!-- @MODRINTH @DOWNLOADS -->
+            <div class="card card-modrinth" id="modrinth">
+                <div class="rivet tl"></div>
+                <div class="rivet tr"></div>
+                <div class="rivet bl"></div>
+                <div class="rivet br"></div>
+                <div>
+                    <h3>
+                        Modrinth
+                        <span class="card-emoji">&#128994;</span>
+                    </h3>
+                    <p>Modrinth is a lightweight option with friendly design but sadly <br> <br> doesnt offer automatic
+                        updates</p>
+                </div>
+
+                <div class="action-row">
+                    <a href="/servers/gearbound/modrinth/GearBound-Season0.4-v0.1.mrpack" download
+                        class="btn btn-modrinth">
+                        <span class="icon-box">
+                            <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z">
+                                </path>
+                            </svg>
+                        </span>
+                        Download .mrpack
+                    </a>
+                </div>
+            </div>
+
+            <!-- @CURSEFORGE @DOWNLOADS -->
+            <div class="card card-curse" id="curseforge">
+                <div class="rivet tl"></div>
+                <div class="rivet tr"></div>
+                <div class="rivet bl"></div>
+                <div class="rivet br"></div>
+                <div>
+                    <h3>
+                        CurseForge
+                        <span class="card-emoji">&#128293;</span>
+                    </h3>
+                    <p>The standard way to go, <br> with so many projects, however<br> <br> doesnt offer automatic
+                        updates</p>
+                </div>
+
+                <div class="action-row">
+                    <a href="/servers/gearbound/curseforge/GearBound-Season0.4-v0.1.zip" download class="btn btn-curse">
+                        <span class="icon-box">
+                            <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z">
+                                </path>
+                            </svg>
+                        </span>
+                        Download .zip
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- @HTML @GUIDE @INSTALLATION -->
+    <div class="container container-thin" id="help">
+        <div class="section-title">Installation Guide</div>
+
+        <div id="tab-btn-list" class="tabs">
+            <button class="tab-btn active" data-tab="curse-help">CurseForge</button>
+            <button class="tab-btn" data-tab="modrinth-help">Modrinth</button>
+            <button class="tab-btn" data-tab="prism-help">Prism</button>
+        </div>
+
+        <!-- @CURSEFORGE @HELP -->
+        <div id="curse-help" class="tab-content active">
+            <h3>Curseforge installation guide</h3>
+            <ol>
+
+                <li>Download the<a href="#curseforge" class="nav-brand"> zip file </a>above</li>
+                <li>Open the curseforge app <a href="curseforge://">
+                        <svg class="icon">
+                            <use href="#app-link"></use>
+                        </svg>
+                    </a></li>
+                <li>Click
+                    <svg class="icon">
+                        <use href="#import-curseforge"></use>
+                    </svg>
+                    Import on the top left of the screen
+                </li>
+                <li>Then click "Choose .Zip file"</li>
+                <li>Select the zip file you just downloaded
+                </li>
+
+                <li>And thats it well done</li>
+            </ol>
+        </div>
+
+        <!-- @MODRINTH @HELP -->
+        <div id="modrinth-help" class="tab-content">
+            <h3>Modrinth installation guide</h3>
+            <ol>
+                <li>Download the<a href="#modrinth" class="nav-brand"> mrPack </a>above</li>
+                <li>Open the modrinth app <a href="modrinth://">
+                        <svg class="icon">
+                            <use href="#app-link"></use>
+                        </svg>
+                    </a></li>
+                <li>Click
+                    <svg class="icon">
+                        <use href="#import-modrinth"></use>
+                    </svg>
+                    Create new instance on the middle left of the screen
+                </li>
+                <li>now choose <span class="modrinth-icon modrinth-style-button">From File</span></li>
+                <li>and click <span class="modrinth-icon modrinth-style-button"><svg class="icon ">
+                            <use href="#folder-modrinth"></use>
+                        </svg>Import from file</span>
+                </li>
+                <li> navigate to the file you downloaded earlier <br> and double click it </li>
+            </ol>
+        </div>
+
+        <!-- @PRISM @HELP -->
+        <div id="prism-help" class="tab-content">
+            <h3>Prism installation guide</h3>
+            <ol>
+                <li>Download the<a href="#prism" class="nav-brand"> zip file </a>above</li>
+                <li>Open Prism Launcher <a href="prismlauncher://">
+                        <svg class="icon">
+                            <use href="#app-link"></use>
+                        </svg>
+                    </a></li>
+                <li>Click
+                    <svg class="icon">
+                        <use href="#import-prism"></use>
+                    </svg>
+                    add instance (top left)
+                </li>
+                <li>Select <span class="modrinth-icon modrinth-style-button"><svg class="icon ">
+                            <use href="#folder-modrinth"></use>
+                        </svg>Import</span>
+                </li>
+                <li>Then click
+                    <span class="modrinth-icon modrinth-style-button">
+                        Browse
+                    </span>
+                </li>
+                <li>and double click the file you downloaded earlier</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- @HTML @ABOUT -->
+    <div class="container" id="about">
+        <div class="section-title">About Gearbound</div>
+        <p class="about-text">
+            Hello there ^-^ <br>
+            Gearbound is a Create focused community, <br>
+            aiming to bring automatisation to the world of Minecraft, <br>
+            We started as a group of friends who slowly over the years all met on this smp, <br>
+            trying out modpacks one after the other and <br>
+            then slowly started customizing the packs we played <br>
+            customizing them how we liked <br>
+            <br>
+            and now here we are also offering you a place to try out all your ideas <br>
+        </p>
+
+        <!-- @STOAT -->
+        <div class="grid container" style="max-width: 800px; margin: 0 auto;">
+            <div class="card card-stoat" style="text-align: center;">
+                <div class="rivet tl"></div>
+                <div class="rivet tr"></div>
+                <div class="rivet bl"></div>
+                <div class="rivet br"></div>
+                <h3>Join the Stoat Community</h3>
+                <p>Join us on Soat for support, meeting the community and showing of your builds </p>
+                <a href="https://stt.gg/ygxWa5ES" target="_blank" class="btn btn-stoat">
+                    Join Stoat
+                    <span class="icon-box">
+                        <svg class="icon">
+                            <use href="#discord-arrow"></use>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+        </div>
+
+        <!-- @DISCORD -->
+        <div class="grid container" style="max-width: 800px; margin: 0 auto;">
+            <div class="card card-discord" style="text-align: center;">
+                <div class="rivet tl"></div>
+                <div class="rivet tr"></div>
+                <div class="rivet bl"></div>
+                <div class="rivet br"></div>
+                <h3>Join the Discord Community</h3>
+                <p>Join us on Discord for support, meeting the community and showing of your builds </p>
+                <!-- UPDATE DISCORD LINK HERE -->
+                <a href="https://discord.gg/8VkeVVuceC" target="_blank" class="btn btn-discord">
+                    Join Discord
+                    <span class="icon-box">
+                        <svg class="icon">
+                            <use href="#discord-arrow"></use>
+                        </svg>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- @FOOTER -->
+    <footer class="gearbound-footer">
+        <p>free minecraft SMP since 2022</p>
+        <p style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.6;">focused on the create mod, happy creating</p>
+
+        <div class="footer-controls">
+            <button class="footer-btn btn-top" onclick="scrollToSection('home')" title="Back to Top">
+                <svg viewBox="0 0 384 512"
+                    style="width: 14px; height: 14px; fill: currentColor; transform: rotate(180deg);">
+                    <path
+                        d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z">
+                    </path>
+                </svg>
+            </button>
+        </div>
+    </footer>
+
+    <svg style="display: none;">
+        <symbol id="app-link" viewBox="0 0 24 24">
+            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M18 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5M15 3h6v6M10 14L20.2 3.8" />
+            </g>
+        </symbol>
+
+        <symbol id="import-curseforge" viewBox="0 0 24 24">
+            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5" />
+            </g>
+        </symbol>
+
+        <symbol id="import-modrinth" viewBox="0 0 24 24">
+            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </g>
+        </symbol>
+
+        <symbol id="import-prism" viewBox="0 0 24 24">
+            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="3" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path d="M3 3h18v18H3zM12 8v8m-4-4h8" />
+            </g>
+        </symbol>
+
+        <symbol id="folder-modrinth" viewBox="0 0 24 24">
+            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round">
+                <path
+                    d="M 16.8 15.2 L 16.8 13.6 Q 16.8 11.2 14.4 11.2 L 10.4 11.2 Q 9.6 11.2 8.8 10.4 L 7.2 8.8 Q 6.4 8 5.6 8 L 2.8 8 Q 0.8 8 0.8 10 L 0.8 20 Q 0.8 22.4 3.2 22.4 L 14.4 22.4 Q 16 22.4 16.8 20 L 17.6 17.6 C 18.2 15.8 17.6 15.2 16.8 15.2 L 7.6 15.2 Q 6.4 15.2 5.6 16.8 L 4.8 18.4" />
+            </g>
+        </symbol>
+
+        <symbol id="discord-arrow" viewBox="0 0 384 512">
+            <path
+                d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z">
+            </path>
+        </symbol>
+
+        <symbol id="bluemap-icon" viewBox="2 2 20 20">
+            <path
+                d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z"
+                stroke="#FFF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+        </symbol>
+    </svg>
+
+    <div id="gallery-lightbox" class="gallery-lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">✖</button>
+        <img id="lightbox-img" src="" alt="Expanded View" onclick="event.stopPropagation()">
+    </div>
+
+
+</body>
+
+</html>
