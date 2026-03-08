@@ -12,10 +12,11 @@ function toggleMenu() {
     if (dropdown) dropdown.classList.toggle('active', isMenuOpen);
 }
 
-function scrollToSection(sectionId) {
+// Updated with 'align' parameter (defaults to 'start', but links can pass 'center')
+function scrollToSection(sectionId, align = 'start') {
     const element = document.getElementById(sectionId);
     if (element) {
-        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        element.scrollIntoView({ behavior: 'smooth', block: align });
     }
     if (isMenuOpen) toggleMenu(); // Close mobile menu if open
 }
@@ -467,6 +468,29 @@ function initTabs() {
         });
     });
 }
+
+// @DOWNLOAD @DROPDOWN @TOGGLE
+function toggleDownloadDropdown(id, event) {
+    event.preventDefault();
+    const dropdown = document.getElementById(id);
+    const isActive = dropdown.classList.contains('active');
+
+    // Close all other dropdowns
+    document.querySelectorAll('.dl-dropdown').forEach(el => el.classList.remove('active'));
+
+    // Toggle the clicked one
+    if (!isActive && dropdown) {
+        dropdown.classList.add('active');
+    }
+    event.stopPropagation();
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', (e) => {
+    if (!e.target.closest('.download-wrapper')) {
+        document.querySelectorAll('.dl-dropdown').forEach(el => el.classList.remove('active'));
+    }
+});
 
 // @GALLERY @PAUSE
 function toggleGalleryPause() {

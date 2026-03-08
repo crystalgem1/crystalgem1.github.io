@@ -21,36 +21,7 @@
      <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 
-
 <body>
-    <!-- @HTML @BACKGROUND @GEARS-->
-    <svg style="display: none;">
-        <symbol id="gear-symbol" viewBox="0 0 100 100">
-            <g fill="currentColor">
-                <circle cx="50" cy="50" r="38" mask="url(#hole-mask)" />
-                <rect x="42" y="5" width="16" height="90" rx="2" />
-                <rect x="42" y="5" width="16" height="90" rx="2" transform="rotate(45 50 50)" />
-                <rect x="42" y="5" width="16" height="90" rx="2" transform="rotate(90 50 50)" />
-                <rect x="42" y="5" width="16" height="90" rx="2" transform="rotate(135 50 50)" />
-                <circle cx="50" cy="50" r="32" />
-            </g>
-            <mask id="hole-mask">
-                <rect x="0" y="0" width="100" height="100" fill="white" />
-                <circle cx="50" cy="50" r="14" fill="black" />
-            </mask>
-            <circle cx="50" cy="50" r="14" fill="#1b1a1a" /> <!-- Matches BG color -->
-        </symbol>
-    </svg>
-
-    <div class="gear-container">
-        <svg class="gear-bg gear-1" id="gearLeft">
-            <use href="#gear-symbol" fill="#eebb66" />
-        </svg>
-        <svg class="gear-bg gear-2" id="gearRight">
-            <use href="#gear-symbol" fill="#eebb66" />
-        </svg>
-    </div>
-
     <!-- @NAV -->
     <nav>
         <a href="#" class="nav-brand">Gearbound</a>
@@ -82,6 +53,16 @@
             <a onclick="scrollToSection('about')" class="mob-nav-item-about">About</a>
         </div>
     </nav>
+
+    <!-- @BACKGROUND @GEARS-->
+    <div class="gear-container">
+        <svg class="gear-bg gear-1" id="gearLeft">
+            <use href="#gear-symbol" fill="#eebb66" />
+        </svg>
+        <svg class="gear-bg gear-2" id="gearRight">
+            <use href="#gear-symbol" fill="#eebb66" />
+        </svg>
+    </div>
 
     <!-- @HTML @HEADER -->
     <header id="home">
@@ -128,30 +109,33 @@
     <!-- @HTML @GALLERY -->
     <div class="container" id="gallery">
         <div class="section-title">Gallery</div>
-        <div class="gallery-controls">
-            <!-- @PAUSE @ICON @BUTTON -->
-            <button class="gallery-control-btn" id="galleryPauseBtn" onclick="toggleGalleryPause()"
-                title="Pause Auto-Scroll">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
-                    <rect x="3" y="2" width="3" height="10" rx="1" />
-                    <rect x="8" y="2" width="3" height="10" rx="1" />
-                </svg>
-            </button>
-            <!-- @GRID @ICON @BUTTON -->
-            <button class="gallery-control-btn" id="galleryExpandBtn" onclick="toggleGalleryExpand()"
-                title="Expand View">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-                    <rect x="1" y="1" width="6" height="6" rx="1" />
-                    <rect x="9" y="1" width="6" height="6" rx="1" />
-                    <rect x="1" y="9" width="6" height="6" rx="1" />
-                    <rect x="9" y="9" width="6" height="6" rx="1" />
-                </svg>
-            </button>
-        </div>
+        
+        <div class="gallery-toolbar">
+            <!-- @GALLERY @TABS -->
+            <div class="gallery-sub-tabs" id="gallery-sub-tabs">
+                <!-- tabs + images get injected here -->
+            </div>
 
-        <!-- @GALLERY @TABS -->
-        <div class="gallery-sub-tabs" id="gallery-sub-tabs">
-            <!-- tabs + images get injected here -->
+            <div class="gallery-controls">
+                <!-- @PAUSE @ICON @BUTTON -->
+                <button class="gallery-control-btn" id="galleryPauseBtn" onclick="toggleGalleryPause()"
+                    title="Pause Auto-Scroll">
+                    <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                        <rect x="3" y="2" width="3" height="10" rx="1" />
+                        <rect x="8" y="2" width="3" height="10" rx="1" />
+                    </svg>
+                </button>
+                <!-- @GRID @ICON @BUTTON -->
+                <button class="gallery-control-btn" id="galleryExpandBtn" onclick="toggleGalleryExpand()"
+                    title="Expand View">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                        <rect x="1" y="1" width="6" height="6" rx="1" />
+                        <rect x="9" y="1" width="6" height="6" rx="1" />
+                        <rect x="1" y="9" width="6" height="6" rx="1" />
+                        <rect x="9" y="9" width="6" height="6" rx="1" />
+                    </svg>
+                </button>
+            </div>
         </div>
 
         <div class="gallery-track-container">
@@ -211,16 +195,21 @@
                 </div>
 
                 <div class="action-row">
-                    <a href="/servers/gearbound/prism/GearBound-S0.4.zip" download class="btn btn-prism">
-                        <span class="icon-box">
-                            <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z">
-                                </path>
-                            </svg>
-                        </span>
-                        Download .ZIP
-                    </a>
+                    <div class="download-wrapper">
+                        <button onclick="toggleDownloadDropdown('prism-dl', event)" class="btn btn-prism">
+                            <span class="icon-box">
+                                <svg viewBox="0 0 384 512">
+                                    <use href="#download-icon"></use>
+                                </svg>
+                            </span>
+                            Download .ZIP
+                        </button>
+                        <div id="prism-dl" class="dl-dropdown prism-theme">
+                            <a href="/servers/gearbound/prism/GearBound-Lite.zip" download>Lite (Max FPS)</a>
+                            <a href="/servers/gearbound/prism/GearBound-Normal.zip" download>Normal (Balanced)</a>
+                            <a href="/servers/gearbound/prism/GearBound-Heavy.zip" download>Heavy (Beautiful)</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -240,17 +229,21 @@
                 </div>
 
                 <div class="action-row">
-                    <a href="/servers/gearbound/modrinth/GearBound-Season0.4-v0.1.mrpack" download
-                        class="btn btn-modrinth">
-                        <span class="icon-box">
-                            <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z">
-                                </path>
-                            </svg>
-                        </span>
-                        Download .mrpack
-                    </a>
+                    <div class="download-wrapper">
+                        <button onclick="toggleDownloadDropdown('modrinth-dl', event)" class="btn btn-modrinth">
+                            <span class="icon-box">
+                                <svg viewBox="0 0 384 512">
+                                    <use href="#download-icon"></use>
+                                </svg>
+                            </span>
+                            Download .mrpack
+                        </button>
+                        <div id="modrinth-dl" class="dl-dropdown modrinth-theme">
+                            <a href="/servers/gearbound/modrinth/GearBound-Lite.mrpack" download>Lite (Max FPS)</a>
+                            <a href="/servers/gearbound/modrinth/GearBound-Normal.mrpack" download>Normal (Balanced)</a>
+                            <a href="/servers/gearbound/modrinth/GearBound-Heavy.mrpack" download>Heavy (Beautiful)</a>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -270,16 +263,21 @@
                 </div>
 
                 <div class="action-row">
-                    <a href="/servers/gearbound/curseforge/GearBound-Season0.4-v0.1.zip" download class="btn btn-curse">
-                        <span class="icon-box">
-                            <svg viewBox="0 0 384 512" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z">
-                                </path>
-                            </svg>
-                        </span>
-                        Download .zip
-                    </a>
+                    <div class="download-wrapper">
+                        <button onclick="toggleDownloadDropdown('curse-dl', event)" class="btn btn-curse">
+                            <span class="icon-box">
+                                <svg viewBox="0 0 384 512">
+                                    <use href="#download-icon"></use>
+                                </svg>
+                            </span>
+                            Download .zip
+                        </button>
+                        <div id="curse-dl" class="dl-dropdown curse-theme">
+                            <a href="/servers/gearbound/curseforge/GearBound-Lite.zip" download>Lite (Max FPS)</a>
+                            <a href="/servers/gearbound/curseforge/GearBound-Normal.zip" download>Normal (Balanced)</a>
+                            <a href="/servers/gearbound/curseforge/GearBound-Heavy.zip" download>Heavy (Beautiful)</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -300,7 +298,7 @@
             <h3>Curseforge installation guide</h3>
             <ol>
 
-                <li>Download the<a href="#curseforge" class="nav-brand"> zip file </a>above</li>
+                <li>Download the<a onclick="scrollToSection('curseforge', 'center')" style="cursor: pointer;" class="nav-brand"> zip file </a>above</li>
                 <li>Open the curseforge app <a href="curseforge://">
                         <svg class="icon">
                             <use href="#app-link"></use>
@@ -324,7 +322,7 @@
         <div id="modrinth-help" class="tab-content">
             <h3>Modrinth installation guide</h3>
             <ol>
-                <li>Download the<a href="#modrinth" class="nav-brand"> mrPack </a>above</li>
+                <li>Download the<a onclick="scrollToSection('modrinth', 'center')" style="cursor: pointer;" class="nav-brand"> mrPack </a>above</li>
                 <li>Open the modrinth app <a href="modrinth://">
                         <svg class="icon">
                             <use href="#app-link"></use>
@@ -349,7 +347,7 @@
         <div id="prism-help" class="tab-content">
             <h3>Prism installation guide</h3>
             <ol>
-                <li>Download the<a href="#prism" class="nav-brand"> zip file </a>above</li>
+                <li>Download the<a onclick="scrollToSection('prism', 'center')" style="cursor: pointer;" class="nav-brand"> zip file </a>above</li>
                 <li>Open Prism Launcher <a href="prismlauncher://">
                         <svg class="icon">
                             <use href="#app-link"></use>
@@ -402,8 +400,8 @@
                 <a href="https://stt.gg/ygxWa5ES" target="_blank" class="btn btn-stoat">
                     Join Stoat
                     <span class="icon-box">
-                        <svg class="icon">
-                            <use href="#discord-arrow"></use>
+                        <svg class="icon" viewBox="0 0 384 512">
+                            <use href="#download-icon"></use>
                         </svg>
                     </span>
                 </a>
@@ -423,8 +421,8 @@
                 <a href="https://discord.gg/8VkeVVuceC" target="_blank" class="btn btn-discord">
                     Join Discord
                     <span class="icon-box">
-                        <svg class="icon">
-                            <use href="#discord-arrow"></use>
+                        <svg class="icon" viewBox="0 0 384 512">
+                            <use href="#download-icon"></use>
                         </svg>
                     </span>
                 </a>
@@ -439,64 +437,68 @@
 
         <div class="footer-controls">
             <button class="footer-btn btn-top" onclick="scrollToSection('home')" title="Back to Top">
-                <svg viewBox="0 0 384 512"
-                    style="width: 14px; height: 14px; fill: currentColor; transform: rotate(180deg);">
-                    <path
-                        d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z">
-                    </path>
+                <svg viewBox="0 0 384 512" style="width: 14px; height: 14px; fill: currentColor; transform: rotate(180deg);">
+                    <use href="#download-icon"></use>
                 </svg>
             </button>
         </div>
     </footer>
 
+    <!-- @SVG @ASSETS (All icons collected at bottom) -->
     <svg style="display: none;">
+        <symbol id="gear-symbol" viewBox="0 0 100 100">
+            <g fill="currentColor">
+                <circle cx="50" cy="50" r="38" mask="url(#hole-mask)" />
+                <rect x="42" y="5" width="16" height="90" rx="2" />
+                <rect x="42" y="5" width="16" height="90" rx="2" transform="rotate(45 50 50)" />
+                <rect x="42" y="5" width="16" height="90" rx="2" transform="rotate(90 50 50)" />
+                <rect x="42" y="5" width="16" height="90" rx="2" transform="rotate(135 50 50)" />
+                <circle cx="50" cy="50" r="32" />
+            </g>
+            <mask id="hole-mask">
+                <rect x="0" y="0" width="100" height="100" fill="white" />
+                <circle cx="50" cy="50" r="14" fill="black" />
+            </mask>
+            <circle cx="50" cy="50" r="14" fill="#1b1a1a" />
+        </symbol>
+
+        <symbol id="download-icon" viewBox="0 0 384 512">
+            <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path>
+        </symbol>
+
         <symbol id="app-link" viewBox="0 0 24 24">
-            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="3" stroke-linecap="round"
-                stroke-linejoin="round">
+            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M18 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8c0-1.1.9-2 2-2h5M15 3h6v6M10 14L20.2 3.8" />
             </g>
         </symbol>
 
         <symbol id="import-curseforge" viewBox="0 0 24 24">
-            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="3" stroke-linecap="round"
-                stroke-linejoin="round">
+            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 15v4c0 1.1.9 2 2 2h14a2 2 0 0 0 2-2v-4M17 9l-5 5-5-5M12 12.8V2.5" />
             </g>
         </symbol>
 
         <symbol id="import-modrinth" viewBox="0 0 24 24">
-            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="3" stroke-linecap="round"
-                stroke-linejoin="round">
+            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
             </g>
         </symbol>
 
         <symbol id="import-prism" viewBox="0 0 24 24">
-            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="3" stroke-linecap="round"
-                stroke-linejoin="round">
+            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M3 3h18v18H3zM12 8v8m-4-4h8" />
             </g>
         </symbol>
 
         <symbol id="folder-modrinth" viewBox="0 0 24 24">
-            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="2" stroke-linecap="round"
-                stroke-linejoin="round">
-                <path
-                    d="M 16.8 15.2 L 16.8 13.6 Q 16.8 11.2 14.4 11.2 L 10.4 11.2 Q 9.6 11.2 8.8 10.4 L 7.2 8.8 Q 6.4 8 5.6 8 L 2.8 8 Q 0.8 8 0.8 10 L 0.8 20 Q 0.8 22.4 3.2 22.4 L 14.4 22.4 Q 16 22.4 16.8 20 L 17.6 17.6 C 18.2 15.8 17.6 15.2 16.8 15.2 L 7.6 15.2 Q 6.4 15.2 5.6 16.8 L 4.8 18.4" />
+            <g fill="none" fill-rule="evenodd" stroke="#eebb66" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M 16.8 15.2 L 16.8 13.6 Q 16.8 11.2 14.4 11.2 L 10.4 11.2 Q 9.6 11.2 8.8 10.4 L 7.2 8.8 Q 6.4 8 5.6 8 L 2.8 8 Q 0.8 8 0.8 10 L 0.8 20 Q 0.8 22.4 3.2 22.4 L 14.4 22.4 Q 16 22.4 16.8 20 L 17.6 17.6 C 18.2 15.8 17.6 15.2 16.8 15.2 L 7.6 15.2 Q 6.4 15.2 5.6 16.8 L 4.8 18.4" />
             </g>
         </symbol>
 
-        <symbol id="discord-arrow" viewBox="0 0 384 512">
-            <path
-                d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z">
-            </path>
-        </symbol>
-
         <symbol id="bluemap-icon" viewBox="2 2 20 20">
-            <path
-                d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z"
-                stroke="#FFF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9 6.75V15m6-6v8.25m.503 3.498 4.875-2.437c.381-.19.622-.58.622-1.006V4.82c0-.836-.88-1.38-1.628-1.006l-3.869 1.934c-.317.159-.69.159-1.006 0L9.503 3.252a1.125 1.125 0 0 0-1.006 0L3.622 5.689C3.24 5.88 3 6.27 3 6.695V19.18c0 .836.88 1.38 1.628 1.006l3.869-1.934c.317-.159.69-.159 1.006 0l4.994 2.497c.317.158.69.158 1.006 0Z" stroke="#FFF" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" />
         </symbol>
     </svg>
 
@@ -504,8 +506,6 @@
         <button class="lightbox-close" onclick="closeLightbox()">✖</button>
         <img id="lightbox-img" src="" alt="Expanded View" onclick="event.stopPropagation()">
     </div>
-
-
 </body>
 
 </html>
